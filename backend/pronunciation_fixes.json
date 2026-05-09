@@ -1,0 +1,40 @@
+{
+  "_README": "Per-language pronunciation fixes. Each entry replaces a literal string before the text is sent to the model. Replacements should sound identical to a native speaker but be a spelling the model pronounces correctly. This file is hot-reloaded on every request — edit and save, no restart needed.",
+
+  "_format": {
+    "<lang_code>": [
+      { "from": "<source string>", "to": "<replacement>", "note": "<why>" }
+    ]
+  },
+
+  "_to_test_hi": [
+    "These are characters/conjuncts that sometimes need fixes in Hindi TTS engines. Test each one by typing a sample word and listening; if the model misreads, add a rule below.",
+    "क्ष  — कक्षा, परीक्षा, क्षमा, राक्षस  (should sound 'ksha', sometimes mispronounced 'ksa')",
+    "ऋ   — ऋषि, ऋतु, ऋण  (should sound 'rishi/ritu/rin')",
+    "ृ   — कृषि, कृष्ण, कृपा  (should sound 'krishi/krishn/kripa')",
+    "ँ   — हँसना, चाँद  (chandrabindu — nasal vowel)",
+    "ॐ   — ॐ नमः  (Om sign)",
+    "ज़  — ज़िंदगी, बाज़ार  (z, not j)",
+    "फ़  — फ़ोन, फ़िल्म  (f, not ph)",
+    "क़  — क़िला, काग़ज़  (q, like in Persian/Arabic loans)",
+    "ख़  — ख़ान, ख़ुशी  (kh, deep guttural)",
+    "ग़  — ग़म, ग़लत  (gh, voiced fricative)",
+    "ड़  — पढ़ना, बड़ा  (retroflex flap)",
+    "ढ़  — पढ़ाई, बूढ़ा  (aspirated retroflex flap)",
+    "Numbers in Devanagari: १२३ vs Arabic 123",
+    "English words mixed in Hindi text",
+    "Hyphenated compound words: ज्ञान-मेला, राजा-रानी"
+  ],
+
+  "hi": [
+    { "from": "ज्ञ", "to": "ग्य", "note": "jña → gya. Sanskrit conjunct read literally as 'jiyan' by Supertonic; modern Hindi pronounces it as 'gya'. Covers ज्ञान/विज्ञान/अज्ञात/यज्ञ/संज्ञा/etc." }
+  ],
+
+  "en": [],
+  "ja": [],
+  "ko": [],
+  "ar": [],
+  "es": [],
+  "de": [],
+  "fr": []
+}

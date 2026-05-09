@@ -1,0 +1,25 @@
+# Python
+.supertonic-venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node / frontend
+node_modules/
+frontend/dist/
+.vite/
+
+# Audio test outputs
+*.wav
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Env
+.env
+.env.local
+
+# Supertonic model cache (large; downloaded on demand)
+~/.cache/supertonic/

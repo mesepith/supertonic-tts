@@ -1,0 +1,4 @@
+supertonic==1.2.0
+fastapi==0.118.0
+uvicorn[standard]==0.37.0
+pydantic==2.10.4
