@@ -23,6 +23,10 @@ echo "==> Creating $APP_DIR"
 mkdir -p "$APP_DIR/.hf-cache"
 chown -R www-data:www-data "$APP_DIR"
 
+# www-data home is /var/www; supertonic caches models at ~/.cache/supertonic3
+mkdir -p /var/www/.cache
+chown www-data:www-data /var/www/.cache
+
 echo "==> Enabling Apache modules"
 a2enmod proxy proxy_http headers rewrite ssl >/dev/null
 

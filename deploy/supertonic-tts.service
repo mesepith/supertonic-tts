@@ -21,7 +21,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=full
 ProtectHome=true
-ReadWritePaths=/var/www/html/tts/supertonic-tts/.hf-cache /var/www/html/tts/supertonic-tts/backend
+ReadWritePaths=/var/www/html/tts/supertonic-tts/.hf-cache /var/www/html/tts/supertonic-tts/backend /var/www/.cache
 
 [Install]
 WantedBy=multi-user.target
