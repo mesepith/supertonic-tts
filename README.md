@@ -93,7 +93,55 @@ Use this for short text (≤ 1 sentence, ~200 chars). For longer text the model 
 
 ### `POST /api/tts/stream` — chunked NDJSON
 
-The server splits the text on sentence/clause punctuation (`. ! ? ।` always; `,` only if the buffer ≥ `min_chunk_len`), synthesizes each chunk, and streams **one JSON object per line** as each chunk completes. Clients can play audio progressively — first chunk arrives in ~0.2 s.
+#### What this endpoint does (in plain English)
+
+You send **one POST** with your full text. The server:
+1. Splits the text on punctuation (each sentence becomes one "chunk").
+2. Synthesizes chunk 1 → sends it back immediately as a line of JSON.
+3. Synthesizes chunk 2 → sends *that* back as the next line.
+4. … and so on until done.
+
+Crucially, the response stays open — you receive each chunk **the moment it's ready**, not after the whole text is done. For a 15-sentence story, you get the first WAV in ~1 second instead of waiting ~15 seconds for everything.
+
+```
+Time:    0s ─────── 1s ─────── 2s ─────── 3s ─────── …
+                     │           │           │
+client receives:  chunk1      chunk2      chunk3
+                  (play!)    (queue)     (queue)
+```
+
+Each chunk is a complete, standalone `.wav` file — base64-encoded so it can ride inside JSON. Decode it, play it, save it — same as any other WAV.
+
+#### What "NDJSON" means
+
+NDJSON = **N**ewline-**D**elimited **JSON**. The response body is many JSON objects, **one per line**. You parse them one at a time as they arrive (don't try to parse the whole body as a single JSON value — it isn't one).
+
+```
+{"index":0,"total":3, ... ,"audio_b64":"UklGRi…"}\n
+{"index":1,"total":3, ... ,"audio_b64":"UklGRi…"}\n
+{"index":2,"total":3, ... ,"audio_b64":"UklGRi…"}\n
+```
+
+#### Field-by-field
+
+| Field | Type | Meaning |
+|---|---|---|
+| `index` | int | 0-based chunk position |
+| `total` | int | Total chunks for this request (same on every line) |
+| `text` | string | Original text of this chunk |
+| `audio_b64` | string | Base64 of a complete WAV file (44.1 kHz, 16-bit, mono). `base64.b64decode` → playable bytes. |
+| `sample_rate` | int | Always `44100` for now |
+| `format` | string | Always `"wav"` for now |
+| `error` | string | **Only present if synthesis failed for this chunk.** Other chunks still try. |
+
+#### Recipe — what your client needs to do
+
+1. POST your text/voice/lang to `/api/tts/stream`.
+2. Read the response **line by line** (don't `.read()` it all).
+3. For each line: `JSON.parse` it → if it has `audio_b64`, base64-decode that field → you now have WAV bytes you can play / save / pipe.
+4. Loop until the connection closes (you'll have received `total` lines).
+
+That's the whole protocol. Below are working examples in three languages.
 
 Request body adds one optional field on top of the common fields:
 
