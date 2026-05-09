@@ -2,7 +2,7 @@
 # Build + install on the server.  Run after every code update.
 set -euo pipefail
 
-APP_DIR=/var/www/supertonic-tts
+APP_DIR=/var/www/html/tts/supertonic-tts
 VENV="$APP_DIR/.supertonic-venv"
 
 if [[ $EUID -ne 0 ]]; then echo "Run as root"; exit 1; fi

@@ -3,7 +3,7 @@
 # Run as root.  Idempotent — safe to re-run.
 set -euo pipefail
 
-APP_DIR=/var/www/supertonic-tts
+APP_DIR=/var/www/html/tts/supertonic-tts
 DOMAIN=supertonic-tts.zahiralam.com
 
 if [[ $EUID -ne 0 ]]; then echo "Run as root"; exit 1; fi
