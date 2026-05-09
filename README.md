@@ -77,23 +77,35 @@ curl -X POST https://supertonic-tts.zahiralam.com/api/tts \
 
 DNS: point `supertonic-tts.zahiralam.com` (A record) at the server **before** running certbot.
 
-```bash
-# On your Mac
-rsync -avz --exclude='.supertonic-venv' --exclude='node_modules' \
-           --exclude='frontend/dist' --exclude='*.wav' \
-           ./ root@<server>:/var/www/supertonic-tts/
+### First-time setup
 
-# On the server (one time)
+```bash
+# On the server
 ssh root@<server>
-cd /var/www/supertonic-tts
-bash deploy/setup-server.sh        # installs deps, vhost, systemd unit
-bash deploy/deploy.sh              # builds frontend, installs python deps
+mkdir -p /var/www/html/tts
+git clone https://github.com/mesepith/supertonic-tts /var/www/html/tts/supertonic-tts
+cd /var/www/html/tts/supertonic-tts
+
+bash deploy/setup-server.sh        # installs deps, Apache vhost, systemd unit
+bash deploy/deploy.sh              # builds frontend, installs Python deps, starts service
 certbot --apache -d supertonic-tts.zahiralam.com
-systemctl enable --now supertonic-tts
-journalctl -u supertonic-tts -f    # watch the first model download (~400 MB)
+systemctl enable supertonic-tts
+journalctl -u supertonic-tts -f    # watch startup — model loads from cache (~1s after first run)
 ```
 
-For subsequent updates: `rsync` + `bash deploy/deploy.sh`.
+### Updating after a code change
+
+```bash
+# On your Mac
+git push
+
+# On the server
+cd /var/www/html/tts/supertonic-tts
+git pull
+bash deploy/deploy.sh
+```
+
+`deploy.sh` rebuilds the frontend, updates Python packages if `requirements.txt` changed, and restarts the service.
 
 ## Notes
 
