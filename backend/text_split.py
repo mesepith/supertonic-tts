@@ -15,7 +15,7 @@ SOFT_PUNCT = set(",")
 CLOSERS = set("”’’\"')]}»›")
 DEFAULT_MIN_LEN = 30
 
-
+"""Splits text into segments by punctuation, suitable for streaming synthesis."""
 def split_by_punctuation(text: str, min_len: int = DEFAULT_MIN_LEN) -> list[str]:
     segments: list[str] = []
     buffer: list[str] = []
