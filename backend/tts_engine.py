@@ -30,7 +30,9 @@ _fixes_lock = threading.Lock()
 _fixes_cache: dict[str, list[tuple[str, str]]] = {}
 _fixes_mtime: float = 0.0
 
-
+"""
+@author: Zahir
+"""
 def _load_fixes_if_changed() -> dict[str, list[tuple[str, str]]]:
     global _fixes_cache, _fixes_mtime
     with _fixes_lock:
