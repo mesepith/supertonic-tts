@@ -32,6 +32,7 @@ _fixes_mtime: float = 0.0
 
 """
 @author: Zahir
+Desc: Loads and manages pronunciation fixes for different languages.
 """
 def _load_fixes_if_changed() -> dict[str, list[tuple[str, str]]]:
     global _fixes_cache, _fixes_mtime
