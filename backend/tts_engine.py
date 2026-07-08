@@ -64,7 +64,10 @@ def _load_fixes_if_changed() -> dict[str, list[tuple[str, str]]]:
                     total, len(new_cache), _FIXES_PATH.name)
         return _fixes_cache
 
-
+"""
+@author: Zahir
+Desc: Applies pronunciation fixes to the input text based on the specified language.
+"""
 def _apply_pronunciation_fixes(text: str, lang: str) -> str:
     fixes = _load_fixes_if_changed().get(lang)
     if not fixes:
