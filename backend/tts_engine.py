@@ -76,7 +76,10 @@ def _apply_pronunciation_fixes(text: str, lang: str) -> str:
         text = text.replace(src, dst)
     return text
 
-
+"""
+@author: Zahir
+Desc: Data class representing a synthesis request with text, voice, language, and other parameters.
+"""
 @dataclass(frozen=True)
 class SynthRequest:
     text: str
