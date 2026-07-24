@@ -89,7 +89,10 @@ class SynthRequest:
     total_steps: int = 5
     silence_duration: float = 0.3
 
-
+"""
+@author: Zahir
+Desc: SupertonicEngine class that wraps the TTS model, manages voice styles, and provides thread-safe synthesis methods.
+"""
 class SupertonicEngine:
     def __init__(self, model: str = "supertonic-3", threads: Optional[int] = None):
         self._model_name = model
